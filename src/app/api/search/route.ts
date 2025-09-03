@@ -19,34 +19,19 @@ export async function GET(req: NextRequest) {
     }
 
     const posts = await prisma.post.findMany({
-      where: {
-        OR: [
-          {
-            content: {
-              search: searchQuery,
-            },
-          },
-          {
-            user: {
-              displayName: {
-                search: searchQuery,
-              },
-            },
-          },
-          {
-            user: {
-              username: {
-                search: searchQuery,
-              },
-            },
-          },
-        ],
+        where: {
+          OR: [
+            { content: { contains: q, mode: "insensitive" } },
+            { user: { displayName: { contains: q, mode: "insensitive" } } },
+            { user: { username: { contains: q, mode: "insensitive" } } },
+          ],
       },
       include: getPostDataInclude(user.id),
       orderBy: { createdAt: "desc" },
       take: pageSize + 1,
       cursor: cursor ? { id: cursor } : undefined,
     });
+
 
     const nextCursor = posts.length > pageSize ? posts[pageSize].id : null;
 
