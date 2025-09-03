@@ -53,7 +53,7 @@ export async function signUp(
       return {
         error: "Email already taken",
       };
-    }
+    }; 
 
     await prisma.$transaction(async (tx) => {
       await tx.user.create({
@@ -65,6 +65,7 @@ export async function signUp(
           passwordHash,
         },
       });
+      
       await streamServerClient.upsertUser({
         id: userId,
         username,

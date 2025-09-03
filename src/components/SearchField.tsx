@@ -1,13 +1,15 @@
 "use client";
 
-import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { SearchIcon } from "lucide-react";
+import { FormEvent } from "react";
+
 import { Input } from "./ui/input";
 
 export default function SearchField() {
   const router = useRouter();
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const q = (form.q as HTMLInputElement).value.trim();

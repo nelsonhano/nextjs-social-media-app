@@ -1,10 +1,12 @@
-import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
+import { ReactNode } from "react";
+
+import { validateRequest } from "@/auth";
 
 export default async function Layout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const { user } = await validateRequest();
 

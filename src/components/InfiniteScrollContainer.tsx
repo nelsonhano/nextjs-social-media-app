@@ -1,6 +1,7 @@
 import { useInView } from "react-intersection-observer";
+import { PropsWithChildren } from "react";
 
-interface InfiniteScrollContainerProps extends React.PropsWithChildren {
+interface InfiniteScrollContainerProps extends PropsWithChildren {
   onBottomReached: () => void;
   className?: string;
 }

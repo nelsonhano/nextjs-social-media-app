@@ -9,7 +9,7 @@ export async function logout() {
 
   if (!session) {
     throw new Error("Unauthorized");
-  }
+  };
 
   await lucia.invalidateSession(session.id);
 
