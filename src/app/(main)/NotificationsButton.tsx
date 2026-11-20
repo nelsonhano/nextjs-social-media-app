@@ -8,11 +8,15 @@ import { Bell } from "lucide-react";
 import Link from "next/link";
 
 interface NotificationsButtonProps {
-  initialState: NotificationCountInfo;
+  initialState?: NotificationCountInfo;
+  className?: string;
+  hideLabel?: boolean;
 }
 
 export default function NotificationsButton({
-  initialState,
+  initialState = { unreadCount: 0 },
+  className,
+  hideLabel,
 }: NotificationsButtonProps) {
   const { data } = useQuery({
     queryKey: ["unread-notification-count"],
@@ -27,7 +31,7 @@ export default function NotificationsButton({
   return (
     <Button
       variant="ghost"
-      className="flex items-center justify-start gap-3"
+      className={className || "flex items-center justify-start gap-3"}
       title="Notifications"
       asChild
     >
@@ -35,12 +39,12 @@ export default function NotificationsButton({
         <div className="relative">
           <Bell />
           {!!data.unreadCount && (
-            <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1 text-xs font-medium tabular-nums text-primary-foreground">
+            <span className="absolute -right-1 -top-1 rounded-full bg-[#FF3B69] px-1 text-xs font-bold tabular-nums text-white">
               {data.unreadCount}
             </span>
           )}
         </div>
-        <span className="hidden lg:inline">Notifications</span>
+        {!hideLabel && <span className="hidden lg:inline">Notifications</span>}
       </Link>
     </Button>
   );

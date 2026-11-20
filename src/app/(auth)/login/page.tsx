@@ -9,7 +9,26 @@ export const metadata: Metadata = {
   title: "Login",
 };
 
-export default function Page() {
+interface PageProps {
+  searchParams: Promise<{ error?: string }>;
+}
+
+const errorMessages: Record<string, string> = {
+  unverified_email:
+    "Your Google email address is not verified. Please verify your email with Google or log in with your password.",
+  account_collision:
+    "This email is already connected to a different Google account. Please sign in with your password.",
+  oauth_cancelled: "Google sign in was cancelled.",
+  oauth_error: "Failed to sign in with Google. Please try again.",
+};
+
+export default async function Page({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const errorCode = resolvedSearchParams?.error;
+  const oauthErrorMessage = errorCode
+    ? errorMessages[errorCode] || errorMessages.oauth_error
+    : undefined;
+
   return (
     <main className="flex h-screen items-center justify-center p-5">
       <div className="flex h-full max-h-[40rem] w-full max-w-[64rem] overflow-hidden rounded-2xl bg-card shadow-2xl">
@@ -22,7 +41,7 @@ export default function Page() {
               <span>OR</span>
               <div className="h-px flex-1 bg-muted" />
             </div>
-            <LoginForm />
+            <LoginForm oauthErrorMessage={oauthErrorMessage} />
             <Link href="/signup" className="block text-center hover:underline">
               Don&apos;t have an account? Sign up
             </Link>

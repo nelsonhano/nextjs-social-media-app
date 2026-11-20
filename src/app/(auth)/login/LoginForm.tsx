@@ -17,8 +17,15 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { login } from "./actions";
 
-export default function LoginForm() {
+interface LoginFormProps {
+  oauthErrorMessage?: string;
+}
+
+export default function LoginForm({ oauthErrorMessage }: LoginFormProps) {
   const [error, setError] = useState<string>();
+  const [oauthError, setOauthError] = useState<string | undefined>(
+    oauthErrorMessage,
+  );
 
   const [isPending, startTransition] = useTransition();
 
@@ -32,6 +39,7 @@ export default function LoginForm() {
 
   async function onSubmit(values: LoginValues) {
     setError(undefined);
+    setOauthError(undefined);
     startTransition(async () => {
       const { error } = await login(values);
       if (error) setError(error);
@@ -41,6 +49,11 @@ export default function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        {oauthError && (
+          <div className="rounded-md bg-destructive/15 p-3 text-center text-sm font-medium text-destructive">
+            {oauthError}
+          </div>
+        )}
         {error && <p className="text-center text-destructive">{error}</p>}
         <FormField
           control={form.control}

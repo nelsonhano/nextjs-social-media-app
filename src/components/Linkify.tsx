@@ -45,7 +45,7 @@ function LinkifyHashtag({ children }: LinkifyProps) {
         <Link
           key={key}
           href={`/hashtag/${match.slice(1)}`}
-          className="text-primary hover:underline"
+          className="text-sky-500 hover:text-sky-600 dark:text-sky-400 font-medium hover:underline"
         >
           {match}
         </Link>

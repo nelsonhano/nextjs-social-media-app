@@ -59,15 +59,24 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
   });
 
   return (
-    <button onClick={() => mutate()} className="flex items-center gap-2">
+    <button
+      onClick={() => mutate()}
+      aria-label={data.isLikedByUser ? "Unlike post" : "Like post"}
+      className={cn(
+        "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all active:scale-95",
+        data.isLikedByUser
+          ? "bg-red-500/15 text-red-500 border border-red-500/30"
+          : "bg-muted/70 hover:bg-muted text-muted-foreground hover:text-foreground",
+      )}
+    >
       <Heart
         className={cn(
-          "size-5",
-          data.isLikedByUser && "fill-red-500 text-red-500",
+          "size-4 transition-transform",
+          data.isLikedByUser && "fill-red-500 text-red-500 scale-110",
         )}
       />
-      <span className="text-sm font-medium tabular-nums">
-        {data.likes} <span className="hidden sm:inline">likes</span>
+      <span className="tabular-nums">
+        {data.likes} {data.likes === 1 ? "Like" : "Likes"}
       </span>
     </button>
   );

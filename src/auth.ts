@@ -60,7 +60,21 @@ export const validateRequest = cache(
       };
     }
 
-    const result = await lucia.validateSession(sessionId);
+    let result: { user: User; session: Session } | { user: null; session: null };
+    try {
+      result = await lucia.validateSession(sessionId);
+    } catch {
+      // Retry once to handle Neon serverless database cold starts
+      try {
+        result = await lucia.validateSession(sessionId);
+      } catch (err) {
+        console.error("Database connection error in validateRequest:", err);
+        return {
+          user: null,
+          session: null,
+        };
+      }
+    }
 
     try {
       if (result.session && result.session.fresh) {

@@ -27,6 +27,8 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 14 | Media storage and cleanup cron | Slice 10 | existing |
 | 15 | Dedicated hashtag feed page | Slice 11 | done |
 | 16 | Email verification and password reset | Slice 12 | planned |
+| 17 | Google account linking for existing credentials | Slice 13 | done |
+| 18 | Modern UI revamp with white glass card styling | Slice 14 | done |
 
 ## Foundations
 
@@ -145,6 +147,34 @@ Spec [0001](../specs/0001-hashtag-feed/index.md) · code in `src/app/(main)/hash
 Automated email verification link on signup and secure password reset flow for forgotten credentials.
 **Done when:** unverified users confirm email addresses and password reset links allow updating forgotten passwords.
 - [ ] Design it (spec): `/architect password reset`
+
+### 17. Google account linking for existing credentials · done
+Link Google social login to an existing email and password account so users who signed up through the form can log in with Google using the same email address.
+**Done when:** signing in with Google identifies an existing account with the verified Google email, links the Google identifier, preserves user credentials, and starts an authenticated session.
+- [x] Design it (spec): `/architect google account linking`
+- [x] Build it: /develop google account linking
+  - [x] Google remote image pattern configuration in Next.js (AC-9)
+  - [x] Google userinfo typing and strict email verification guard (AC-1, AC-4, AC-5)
+  - [x] Account linking lookup by case insensitive email with collision guard (AC-1, AC-2, AC-7, AC-8)
+  - [x] OAuth error redirects and login page alert banner rendering (AC-6)
+- [x] Verify it: `/check verify google account linking`
+- [x] Test it: `/test google account linking`
+Spec [0002](../specs/0002-google-account-linking.md) · code in `src/app/api/auth/callback/google/`
+
+### 18. Modern UI revamp with white glass card styling · done
+Revamp the application interface to match the modern mobile reference design featuring stories tray, pill tabs, rounded media grids, floating pill navigation, and frosted white glass cards across the entire application.
+**Done when:** all cards throughout the application render with frosted white glass styling, backdrop blur, and subtle borders, and navigation, post cards, and profile views match the visual reference layout.
+- [x] Design it (spec): `/architect modern ui revamp with glass cards`
+- [x] Build it: /develop modern ui revamp with glass cards
+  - [x] Global frosted glass utility and adaptive ambient mesh backdrop (AC-1, AC-2)
+  - [x] Floating frosted glass top header with brand logo, notifications, and search (AC-3)
+  - [x] Interactive horizontal stories tray and animated story viewer modal (AC-4, AC-5)
+  - [x] Feed category pill tabs and post card anatomy with follow pill, rounded media grid, and engagement counters (AC-6, AC-7)
+  - [x] Floating mobile bottom pill navigation with coral pink create action and frosted create post modal (AC-8, AC-9)
+  - [x] Shimmering frosted glass loading skeletons (AC-10)
+- [x] Verify it: `/check verify modern ui revamp with glass cards`
+- [x] Test it: `/test modern ui revamp with glass cards`
+Spec [0003](../specs/0003-modern-ui-glass-revamp.md) · code in `src/`
 
 ## Deferred
 Out of scope for current build pass, recorded so the plan stays transparent.

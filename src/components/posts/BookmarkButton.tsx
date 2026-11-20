@@ -64,11 +64,15 @@ export default function BookmarkButton({
   });
 
   return (
-    <button onClick={() => mutate()} className="flex items-center gap-2">
+    <button
+      onClick={() => mutate()}
+      aria-label={data.isBookmarkedByUser ? "Remove bookmark" : "Bookmark post"}
+      className="flex items-center justify-center size-8 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-all active:scale-95"
+    >
       <Bookmark
         className={cn(
-          "size-5",
-          data.isBookmarkedByUser && "fill-primary text-primary",
+          "size-4.5 transition-transform",
+          data.isBookmarkedByUser && "fill-[#FF3B69] text-[#FF3B69] scale-105",
         )}
       />
     </button>

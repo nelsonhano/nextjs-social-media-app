@@ -54,7 +54,7 @@ export default function NewChatDialog({
               }
             : {}),
         },
-        { name: 1, username: 1 },
+        { name: 1 },
         { limit: 15 },
       ),
   });

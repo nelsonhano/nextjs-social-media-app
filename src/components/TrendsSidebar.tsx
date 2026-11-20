@@ -42,8 +42,8 @@ async function WhoToFollow() {
   });
 
   return (
-    <div className="space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="text-xl font-bold">Who to follow</div>
+    <div className="space-y-5 rounded-3xl glass-card p-5 shadow-sm border border-white/40 dark:border-white/10">
+      <div className="text-xl font-bold tracking-tight">Who to follow</div>
       {usersToFollow.map((user) => (
         <div key={user.id} className="flex items-center justify-between gap-3">
           <UserTooltip user={user}>
@@ -51,12 +51,14 @@ async function WhoToFollow() {
               href={`/users/${user.username}`}
               className="flex items-center gap-3"
             >
-              <UserAvatar avatarUrl={user.avatarUrl} className="flex-none" />
+              <div className="rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[1.5px] flex-none">
+                <UserAvatar avatarUrl={user.avatarUrl} className="border border-background" />
+              </div>
               <div>
                 <p className="line-clamp-1 break-all font-semibold hover:underline">
                   {user.displayName}
                 </p>
-                <p className="line-clamp-1 break-all text-muted-foreground">
+                <p className="line-clamp-1 break-all text-xs text-muted-foreground">
                   @{user.username}
                 </p>
               </div>
@@ -70,6 +72,7 @@ async function WhoToFollow() {
                 ({ followerId }) => followerId === user.id,
               ),
             }}
+            className="rounded-full h-8 px-3 text-xs font-bold"
           />
         </div>
       ))}
@@ -102,8 +105,8 @@ async function TrendingTopics() {
   const trendingTopics = await getTrendingTopics();
 
   return (
-    <div className="space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="text-xl font-bold">Trending topics</div>
+    <div className="space-y-5 rounded-3xl glass-card p-5 shadow-sm border border-white/40 dark:border-white/10">
+      <div className="text-xl font-bold tracking-tight">Trending topics</div>
       {trendingTopics.map(({ hashtag, count }) => {
         const title = hashtag.split("#")[1];
 

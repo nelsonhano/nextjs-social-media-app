@@ -77,15 +77,17 @@ export default function PostEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="flex gap-5">
-        <UserAvatar avatarUrl={user.avatarUrl} className="hidden sm:inline" />
+    <div className="flex flex-col gap-5 rounded-3xl glass-card p-5 shadow-sm border border-white/40 dark:border-white/10">
+      <div className="flex gap-4 sm:gap-5">
+        <div className="hidden sm:block rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px] h-fit">
+          <UserAvatar avatarUrl={user.avatarUrl} className="border-2 border-background" />
+        </div>
         <div {...rootProps} className="w-full">
           <EditorContent
             editor={editor}
             className={cn(
-              "max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3",
-              isDragActive && "outline-dashed",
+              "max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background/50 backdrop-blur-sm px-4 py-3 border border-border/40 focus-within:ring-2 focus-within:ring-pink-500/30 transition-all",
+              isDragActive && "outline-dashed outline-pink-500",
             )}
             onPaste={onPaste}
           />
@@ -98,11 +100,11 @@ export default function PostEditor() {
           removeAttachment={removeAttachment}
         />
       )}
-      <div className="flex items-center justify-end gap-3">
+      <div className="flex items-center justify-end gap-3 pt-1 border-t border-border/30">
         {isUploading && (
           <>
             <span className="text-sm">{uploadProgress ?? 0}%</span>
-            <Loader2 className="size-5 animate-spin text-primary" />
+            <Loader2 className="size-5 animate-spin text-[#FF3B69]" />
           </>
         )}
         <AddAttachmentsButton
@@ -112,8 +114,8 @@ export default function PostEditor() {
         <LoadingButton
           onClick={onSubmit}
           loading={mutation.isPending}
-          disabled={!input.trim() || isUploading}
-          className="min-w-20"
+          disabled={(!input.trim() && !attachments.length) || isUploading}
+          className="min-w-20 rounded-2xl bg-[#FF3B69] hover:bg-[#FF2D55] text-white font-semibold shadow-md shadow-pink-500/25 transition-all active:scale-95"
         >
           Post
         </LoadingButton>
@@ -138,7 +140,7 @@ function AddAttachmentsButton({
       <Button
         variant="ghost"
         size="icon"
-        className="text-primary hover:text-primary"
+        className="text-[#FF3B69] hover:text-[#FF2D55] hover:bg-pink-500/10 rounded-full"
         disabled={disabled}
         onClick={() => fileInputRef.current?.click()}
       >
